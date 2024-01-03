@@ -1,43 +1,53 @@
 #include "monty.h"
 
-stack_t *stack = NULL;
+/**
+ * main - Entry point
+ * @argc: argument count
+ * @argv: double pointer to argument vector
+ *
+ * Return: 0 Success
+ */
 
-int main(void)
+int main(int argc, char **argv)
 {
-	char opcode[256];
-	int value;
+	char *line = NULL;
+	size_t len = 0;
+	ssize_t read;
 	unsigned int line_number = 0;
-	FILE *file = fopen("your_input_file.txt", "r");
+	FILE *file = fopen(argv[1], "r");
+	stack_t *stack = NULL;
 
-	if (file == NULL)
+	if (argc != 2)
 	{
-		perror("Error opening file");
+		fprintf(stderr, "USAGE: monty file\n");
+		exit(EXIT_FAILURE);
+	}
+	if (!file)
+	{
+		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
 
-	while (fscanf(file, "%s", opcode) != EOF)
+	while ((read = getline(&line, &len, file)) != -1)
 	{
-		line_number++;
+		char *opcode;
+		char *arg;
 
-		if (strcmp(opcode, "push") == 0)
-		{
-			if (fscanf(file, "%d", &value) != 1)
-			{
-				fprintf(stderr, "L%d: usage: push integer\n", line_number);
-				exit(EXIT_FAILURE);
-			}
-			push(&stack, value, line_number);
-		}
-		else if (strcmp(opcode, "pall") == 0)
-		{
-			pall(&stack, line_number);
-		}
-		else
-		{
-			fprintf(stderr, "L%d: Unknown opcode: %s\n", line_number, opcode);
-			exit(EXIT_FAILURE);
-		}
+		line_number++;
+		opcode = strtok(line, " \n\t");
+		arg = strtok(NULL, " \n\t");
+		if (opcode)
+			exe(opcode, &stack, line_number, arg);
 	}
 	fclose(file);
+	free(line);
+
+	while (stack != NULL)
+	{
+		stack_t *temp = stack;
+
+		stack = stack->next;
+		free(temp);
+	}
 	return (0);
 }
