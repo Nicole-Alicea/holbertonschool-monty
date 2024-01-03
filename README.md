@@ -1,8 +1,9 @@
 # C - Stacks, Queues - LIFO, FIFO
 
 ### Description
+We have been divided into groups to work on this project related to the data structures "LIFO" and "FIFO". In C, a "LIFO" structure is often implemented using a stack, which is a data structure where the last element added is the first one to be removed. A way to better understand this is to imagine a stack of books. You can only add or remove from the top. If you want to reach the book at the bottom, you will have to remove all of the books on top of it one by one. The functions that are typically implemented are 'push' (to add an element to the top of the stack) and 'pop' (to remove the last-added element).
 
-
+In C, a "FIFO" structure is often implemented using a queue, which is a data structure where the first added element is the first one to be removed. To visualize this, imagine people waiting in a queue. The first person who joined the queue will be the first one to proceed. The queue operations use functions like 'enqueue' (to add an element to the rear of the queue) and 'dequeue' (to remove the first-added element in the queue).  
 
 ---------------------------------
 ### Resources
