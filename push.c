@@ -1,10 +1,24 @@
 #include "monty.h"
 
-void push(stack_t **stack, int value, unsigned int line_number)
+/**
+ * push - ...
+ * @stack: ...
+ * @line_number: ...
+ * @arg: ...
+ *
+ * Return: void
+ */
+
+void push(stack_t **stack, unsigned int line_number, const char *arg)
 {
 	stack_t *new_node = malloc(sizeof(stack_t));
-	(void)line_number;
+	int value = atoi(arg);
 
+	if (!is_integer(arg))
+	{
+		fprintf(stderr, "L%d: usage: push integer\n", line_number);
+		exit(EXIT_FAILURE);
+	}
 	if (new_node == NULL)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
