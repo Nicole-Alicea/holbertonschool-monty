@@ -1,11 +1,12 @@
 #include "monty.h"
 
 /**
- * exe - ...
- * @opcode: ...
- * @stack: ...
- * @line_number: ...
- * @arg: ...
+ * exe - Executes different operations based on the
+ * value of the 'opcode' parameter
+ * @opcode: String representing the operation to be performed
+ * @stack: Double pointer to a stack data structure
+ * @line_number: File's line number
+ * @arg: String argument
  *
  * Return: void
  */

@@ -1,5 +1,4 @@
 #include "monty.h"
-
 /**
  * main - Entry point
  * @argc: argument count
@@ -7,7 +6,6 @@
  *
  * Return: 0 Success
  */
-
 int main(int argc, char **argv)
 {
 	char *line = NULL;
@@ -27,25 +25,20 @@ int main(int argc, char **argv)
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
-
 	while ((read = getline(&line, &len, file)) != -1)
 	{
-		char *opcode;
-		char *arg;
+		char *opcode = strtok(line, " \n\t");
+		char *arg = strtok(NULL, " \n\t");
 
 		line_number++;
-		opcode = strtok(line, " \n\t");
-		arg = strtok(NULL, " \n\t");
 		if (opcode)
 			exe(opcode, &stack, line_number, arg);
 	}
 	fclose(file);
 	free(line);
-
 	while (stack != NULL)
 	{
 		stack_t *temp = stack;
-
 		stack = stack->next;
 		free(temp);
 	}
