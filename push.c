@@ -1,5 +1,4 @@
 #include "monty.h"
-
 /**
  * push - Creates a new node with the provided integer value and pushes
  * it onto the top of the given stack
@@ -8,8 +7,37 @@
  *
  * Return: void
  */
+void push(stack_t **head, unsigned int counter)
+{
+	int n, j = 0, flag = 0;
 
-void push(stack_t **stack, const char *arg, unsigned int line_number,
+	if (bus.arg)
+	{
+		if (bus.arg[0] == '-')
+			j++;
+		for (; bus.arg[j] != '\0'; j++)
+		{
+			if (bus.arg[j] > 57 || bus.arg[j] < 48)
+				flag = 1; }
+		if (flag == 1)
+		{
+			fprintf(stderr, "L%d: usage: push integer\n", counter);
+			fclose(bus.file);
+			free(bus.content);
+			free_stack(*head);
+			exit(EXIT_FAILURE);
+		}
+	}
+	else
+	{
+		fprintf(stderr, "L%d: usage: push integer\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
+		exit(EXIT_FAILURE);
+	}
+}
+/**void push(stack_t **stack, const char *arg, unsigned int line_number,
 		FILE *file, char *line)
 {
 	int x = 0, flag = 0;
@@ -34,7 +62,7 @@ void push(stack_t **stack, const char *arg, unsigned int line_number,
 			exit(EXIT_FAILURE);
 		}
 	}
-}
+}*/
 	/**stack_t *new_node = malloc(sizeof(stack_t));
 	int value = atoi(arg);
 

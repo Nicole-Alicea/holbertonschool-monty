@@ -8,7 +8,21 @@
  * Return: void
  */
 
-void pall(stack_t **stack, unsigned int line_number)
+void pall(stack_t **head, unsigned int counter)
+{
+	stack_t *h;
+	(void)counter;
+
+	h = *head;
+	if (h == NULL)
+		return;
+	while (h)
+	{
+		printf("%d\n", h->n);
+		h = h->next;
+	}
+}
+/**void pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *head = *stack;
 	(void)line_number;
@@ -23,4 +37,4 @@ void pall(stack_t **stack, unsigned int line_number)
 		printf("%d\n", head->n);
 		head = head->next;
 	}
-}
+}*/
