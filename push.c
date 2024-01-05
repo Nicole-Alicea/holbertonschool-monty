@@ -1,87 +1,54 @@
 #include "monty.h"
+
 /**
- * push - Creates a new node with the provided integer value and pushes
- * it onto the top of the given stack
- * @stack: Double pointer to the top of the stack
- * @line_number: File's line number
+ * is_digit - Checks the string for integers
+ * @arg: The string to be checked
+ *
+ * Return: O if an integer, 1 otherwise
+ */
+
+static int is_digit(char *arg)
+{
+	int x;
+
+	for (x = 0; arg[x]; x++)
+	{
+		if (arg[x] == '-' && x == 0)
+		{
+			continue;
+		}
+		if (isdigit(arg[x]) == 0)
+		{
+			return (1);
+		}
+	}
+	return (0);
+}
+
+/**
+ * push - This function will push an integer onto the stack
+ * @stack: Double pointer to the beginning of the stack
+ * @line_number: The line number
  *
  * Return: void
  */
-void push(stack_t **head, unsigned int counter)
-{
-	int n, j = 0, flag = 0;
 
-	if (bus.arg)
+void push(stack_t **stack, unsigned int line_number)
+{
+	char *arg;
+	int i;
+
+	arg = strtok(NULL, "\n\t\r ");
+	if (arg == NULL || is_digit(arg))
 	{
-		if (bus.arg[0] == '-')
-			j++;
-		for (; bus.arg[j] != '\0'; j++)
-		{
-			if (bus.arg[j] > 57 || bus.arg[j] < 48)
-				flag = 1; }
-		if (flag == 1)
-		{
-			fprintf(stderr, "L%d: usage: push integer\n", counter);
-			fclose(bus.file);
-			free(bus.content);
-			free_stack(*head);
-			exit(EXIT_FAILURE);
-		}
-	}
-	else
-	{
-		fprintf(stderr, "L%d: usage: push integer\n", counter);
-		fclose(bus.file);
-		free(bus.content);
-		free_stack(*head);
+		fprintf(stderr, "L%u: usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-}
-/**void push(stack_t **stack, const char *arg, unsigned int line_number,
-		FILE *file, char *line)
-{
-	int x = 0, flag = 0;
-
-	if (arg)
-	{
-		if (arg[0] == '-')
-			x++;
-		for (; arg[x] != '\0'; x++)
-		{
-			if (arg[x] > '9' || arg[x] < '0')
-			{
-				flag = 1;
-			}
-		}
-		if (flag == 1)
-		{
-			fprintf(stderr, "L%d: usage: push integer\n", line_number);
-			fclose(file);
-			free(line);
-			free_the_stack(*stack);
-			exit(EXIT_FAILURE);
-		}
-	}
-}*/
-	/**stack_t *new_node = malloc(sizeof(stack_t));
-	int value = atoi(arg);
-
-	if (!is_integer(arg))
-	{
-		fprintf(stderr, "L%d: usage: push integer\n", line_number);
-		exit(EXIT_FAILURE);
-	}
-	if (new_node == NULL)
+	i = atoi(arg);
+	if (!add_node(stack, i))
 	{
 		fprintf(stderr, "Error: malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
-	new_node->n = value;
-	new_node->prev = NULL;
-	new_node->next = *stack;
-
-	if (*stack != NULL)
-	{
-		(*stack)->prev = new_node;
-	}
-	*stack = new_node;*/
+	var.stack_len++;
+}

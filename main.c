@@ -1,75 +1,62 @@
 #include "monty.h"
-bus_t bus = {NULL, NULL, NULL, 0};
+
+var_t var;
+
 /**
- * main - Entry point
- * @argc: argument count
- * @argv: double pointer to argument vector
- * Return: 0 Success
+ * file_close - close file stream
+ * @status: status passed to exit
+ * @arg: pointer to file stream
+ *
+ * Return: void
+ */
+void file_close(int status, void *arg)
+{
+	FILE *file;
+
+	(void)status;
+
+	file = (FILE *) arg;
+	fclose(file);
+}
+
+/**
+ * main - Monty bytecode interpreter
+ * @argc: number of arguments passed
+ * @argv: array of argument strings
+ * Return: EXIT_SUCCESS on success or EXIT_FAILURE on failure
  */
 int main(int argc, char *argv[])
 {
-	char *content;
-	FILE *file;
-	size_t size = 0;
-	ssize_t read_line = 1;
 	stack_t *stack = NULL;
-	unsigned int counter = 0;
+	unsigned int line_number = 0;
+	FILE *file = NULL;
+	char *line = NULL, *op = NULL;
+	size_t n = 0;
 
+	var.queue = 0;
+	var.stack_len = 0;
 	if (argc != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
 	file = fopen(argv[1], "r");
-	bus.file = file;
-	if (!file)
+	if (file == NULL)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
-	while (read_line > 0)
-	{
-		content = NULL;
-		read_line = getline(&content, &size, file);
-		bus.content = content;
-		counter++;
-		if (read_line > 0)
-		{
-			execute(content, &stack, counter, file);
-		}
-		free(content);
-	}
-	free_stack(stack);
-	fclose(file);
-return (0);
-}
-/**int main(int argc, char **argv)
-{
-	char *line = NULL;
-	size_t len = 0;
-	ssize_t read;
-	unsigned int line_number = 0;
-	FILE *file = fopen(argv[1], "r");
-	stack_t *stack = NULL;
-
-	if (argc != 2)
-	{
-		fprintf(stderr, "USAGE: monty file\n");
-		exit(EXIT_FAILURE);
-	}
-	if (!file)
-	{
-		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-		exit(EXIT_FAILURE);
-	}
-	while ((read = getline(&line, &len, file)) != -1)
+	on_exit(free_line, &line);
+	on_exit(free_the_stack, &stack);
+	on_exit(file_close, file);
+	while (getline(&line, &n, file) != -1)
 	{
 		line_number++;
-		exe(line, NULL, &stack, line_number, file);
-		free(line);
-		line = NULL;
+		op = strtok(line, "\n\t\r ");
+		if (op != NULL && op[0] != '#')
+		{
+			execute(op, &stack, line_number);
+		}
 	}
-	free_the_stack(stack);
-	fclose(file);
-	return (0);
-}*/
+	exit(EXIT_SUCCESS);
+}

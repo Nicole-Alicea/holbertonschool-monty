@@ -8,43 +8,17 @@
  * Return: void
  */
 
-void add(stack_t **head, unsigned int counter)
+void add(stack_t **stack, unsigned int line_number)
 {
-	stack_t *h;
-	int len = 0, aux;
+	int n = 0;
 
-	h = *head;
-	while (h)
+	if (var.stack_len < 2)
 	{
-		h = h->next;
-		len++;
-	}
-	if (len < 2)
-	{
-		fprintf(stderr, "L%d: can't add, stack too short\n", counter);
-		fclose(bus.file);
-		free(bus.content);
-		free_stack(*head);
+		fprintf(stderr, "L%u: can't add, stack too short\n",
+				line_number);
 		exit(EXIT_FAILURE);
 	}
-	h = *head;
-	aux = h->n + h->next->n;
-	h->next->n = aux;
-	*head = h->next;
-	free(h);
+	n += (*stack)->n;
+	pop(stack, line_number);
+	(*stack)->n += n;
 }
-/**void add(stack_t **stack, unsigned int line_number)
-{
-	stack_t *temp;
-
-	if (*stack == NULL || (*stack)->next == NULL)
-	{
-		fprintf(stderr, "L%u: can't add, stack too short\n", line_number);
-		exit(EXIT_FAILURE);
-	}
-	temp = *stack;
-	temp->next->n += temp->n;
-	*stack = temp->next;
-	(*stack)->prev = NULL;
-	free(temp);
-}*/
