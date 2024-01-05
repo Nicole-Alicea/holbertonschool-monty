@@ -14,27 +14,24 @@ int main(int argc, char **argv)
 	FILE *file = fopen(argv[1], "r");
 	stack_t *stack = NULL;
 
-	if (argc != 2 || !(file))
+	if (argc != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
+	if (!file)
+	{
+		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
+		exit(EXIT_FAILURE);
+	}
 	while ((read = getline(&line, &len, file)) != -1)
 	{
-		char *opcode = strtok(line, " \n\t");
-		char *arg = strtok(NULL, " \n\t");
-
 		line_number++;
-		if (opcode)
-			exe(opcode, &stack, line_number, arg);
+		exe(line, NULL, &stack, line_number, file);
+		free(line);
+		line = NULL;
 	}
+	free_the_stack(stack);
 	fclose(file);
-	free(line);
-	while (stack != NULL)
-	{
-		stack_t *temp = stack;
-		stack = stack->next;
-		free(temp);
-	}
 	return (0);
 }
