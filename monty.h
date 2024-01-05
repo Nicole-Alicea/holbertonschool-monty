@@ -35,16 +35,26 @@ typedef struct instruction_s
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-void push(stack_t **stack, unsigned int line_number, const char *arg);
+void push(stack_t **stack, const char *arg, unsigned int line_number,
+		FILE *file, char *line);
 
 void pall(stack_t **stack, unsigned int line_number);
 
-void exe(char *opcode, stack_t **stack, unsigned int line_number, char *arg);
+int exe(char *line, char *arg, stack_t **stack, unsigned int line_number,
+		FILE *file);
 
 int is_integer(const char *arg);
 
 void pint(stack_t **stack, unsigned int line_number);
 
-void pop(stack_t **stack, unsigned int line_number);
+void pop(stack_t **stack, FILE *file, char *line, unsigned int line_number);
+
+void nop(stack_t **stack, unsigned int line_number);
+
+void swap(stack_t **stack, unsigned int line_number);
+
+void add(stack_t **stack, unsigned int line_number);
+
+void free_the_stack(stack_t *stack);
 
 #endif

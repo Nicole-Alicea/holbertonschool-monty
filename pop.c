@@ -2,26 +2,24 @@
 
 /**
  * pop - This function removes the top element of the stack
- * @stack: Double pointer to linked list stack
- * @line_number: File's line number
+ * @stack: Double pointer to head of the stack
+ * @line_number: The line number
  *
  * Return: void
  */
 
-void pop(stack_t **stack, unsigned int line_number)
+void pop(stack_t **stack, FILE *file, char *line, unsigned int line_number)
 {
-	stack_t *s = *stack;
+	stack_t *head = *stack;
 
 	if (*stack == NULL)
 	{
 		fprintf(stderr, "L%d: can't pop empty stack\n", line_number);
+		fclose(file);
+		free(line);
+		free_the_stack(*stack);
 		exit(EXIT_FAILURE);
 	}
-	*stack = (*stack)->next;
-
-	if (*stack)
-	{
-		(*stack)->prev = NULL;
-	}
-	free(s);
+	*stack = head->next;
+	free(head);
 }

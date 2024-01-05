@@ -3,7 +3,7 @@
 /**
  * exe - Executes different operations based on the
  * value of the 'opcode' parameter
- * @opcode: String representing the operation to be performed
+ * @line: String representing the operation to be performed
  * @stack: Double pointer to a stack data structure
  * @line_number: File's line number
  * @arg: String argument
@@ -11,27 +11,30 @@
  * Return: void
  */
 
-void exe(char *opcode, stack_t **stack, unsigned int line_number, char *arg)
+int exe(char *line, char *arg, stack_t **stack, unsigned int line_number,
+		FILE *file)
 {
-	if (strcmp(opcode, "push") == 0)
+	if (strcmp(line, "push") == 0)
 	{
-		push(stack, line_number, arg);
+		push(stack, arg, line_number, file, line);
 	}
-	else if (strcmp(opcode, "pall") == 0)
+	else if (strcmp(line, "pall") == 0)
 	{
 		pall(stack, line_number);
 	}
-	else if (strcmp(opcode, "pint") == 0)
+	else if (strcmp(line, "pint") == 0)
 	{
 		pint(stack, line_number);
 	}
-	else if (strcmp(opcode, "pop") == 0)
+	else if (strcmp(line, "pop") == 0)
 	{
-		pop(stack, line_number);
+		pop(stack, file, line, line_number);
 	}
 	else
 	{
-		fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+		fprintf(stderr, "L%d: unknown instruction %s\n", line_number,
+				line);
 		exit(EXIT_FAILURE);
 	}
+	return (1);
 }
