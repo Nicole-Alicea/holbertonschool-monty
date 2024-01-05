@@ -1,59 +1,54 @@
 #include "monty.h"
+#include <ctype.h>
 
 /**
- * push - Creates a new node with the provided integer value and pushes
- * it onto the top of the given stack
- * @stack: Double pointer to the top of the stack
- * @line_number: File's line number
- *
- * Return: void
- */
-
-void push(stack_t **stack, const char *arg, unsigned int line_number,
-		FILE *file, char *line)
+* check_for_digit - checks that a string only contains digits
+* @arg: string to check
+* Return: 0 if only digits, else 1
+*/
+static int check_for_digit(char *arg)
 {
-	int x = 0, flag = 0;
+int i;
 
-	if (arg)
-	{
-		if (arg[0] == '-')
-			x++;
-		for (; arg[x] != '\0'; x++)
-		{
-			if (arg[x] > '9' || arg[x] < '0')
-			{
-				flag = 1;
-			}
-		}
-		if (flag == 1)
-		{
-			fprintf(stderr, "L%d: usage: push integer\n", line_number);
-			fclose(file);
-			free(line);
-			free_the_stack(*stack);
-			exit(EXIT_FAILURE);
-		}
-	}
+for (i = 0; arg[i]; i++)
+{
+if (arg[i] == '-' && i == 0)
+continue;
+if (!isdigit(arg[i]))
+return (1);
 }
-	/**stack_t *new_node = malloc(sizeof(stack_t));
-	int value = atoi(arg);
+return (0);
+}
 
-	if (!is_integer(arg))
-	{
-		fprintf(stderr, "L%d: usage: push integer\n", line_number);
-		exit(EXIT_FAILURE);
-	}
-	if (new_node == NULL)
-	{
-		fprintf(stderr, "Error: malloc failed\n");
-		exit(EXIT_FAILURE);
-	}
-	new_node->n = value;
-	new_node->prev = NULL;
-	new_node->next = *stack;
+/**
+* push - push an integer onto the stack
+* @stack: double pointer to the beginning of the stack
+* @line_number: script line number
+*/
+void push(stack_t **stack, unsigned int line_number, char *arg)
+{ 
+int num;
 
-	if (*stack != NULL)
-	{
-		(*stack)->prev = new_node;
-	}
-	*stack = new_node;*/
+arg = strtok(NULL, "\n\t\r ");
+if (arg == NULL || check_for_digit(arg)) {
+dprintf(STDERR_FILENO, "L%u: usage: push integer\n", line_number);
+exit(EXIT_FAILURE);
+}
+num = atoi(arg);
+
+stack_t *new_node = (stack_t *) malloc(sizeof(stack_t));
+if (new_node == NULL)
+{
+dprintf(STDERR_FILENO, "Error: malloc failed\n");
+exit(EXIT_FAILURE);
+}
+
+new_node->n = num;
+new_node->prev = NULL;
+new_node->next = *stack;
+if (*stack != NULL)
+{
+(*stack)->prev = new_node;
+}
+*stack = new_node;
+}

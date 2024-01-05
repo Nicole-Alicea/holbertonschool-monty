@@ -11,12 +11,11 @@
  * Return: void
  */
 
-int exe(char *line, char *arg, stack_t **stack, unsigned int line_number,
-		FILE *file)
+int exe(char *line,char *arg, stack_t **stack, unsigned int line_number, FILE *file)
 {
 	if (strcmp(line, "push") == 0)
 	{
-		push(stack, arg, line_number, file, line);
+	  push(stack, line_number, arg);
 	}
 	else if (strcmp(line, "pall") == 0)
 	{

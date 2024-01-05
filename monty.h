@@ -5,6 +5,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+
+
+
+typedef struct var_s {
+  int queue; 
+  size_t stack_len; 
+} var_t;
+
+#define STACK 0
+#define QUEUE 1
+
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -35,8 +47,7 @@ typedef struct instruction_s
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-void push(stack_t **stack, const char *arg, unsigned int line_number,
-		FILE *file, char *line);
+void push(stack_t **stack, unsigned int line_number, char *arg);
 
 void pall(stack_t **stack, unsigned int line_number);
 

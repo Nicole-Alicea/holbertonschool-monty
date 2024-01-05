@@ -149,5 +149,5 @@ The opcode nop doesn’t do anything.
 ### Authors &copy;
 
 - Nicole Alicea Plumey
-- Raphael Santos
+- Raphael Santos Jimenez
 - Mitzael Pitre
