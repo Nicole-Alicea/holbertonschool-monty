@@ -82,4 +82,8 @@ void free_the_stack(int status, void *arg);
 
 void free_line(int status, void *arg);
 
+void sub(stack_t **head, unsigned int counter);
+
+void div(stack_t **head, unsigned int counter);
+
 #endif
