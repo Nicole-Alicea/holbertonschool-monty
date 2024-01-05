@@ -25,14 +25,12 @@ return (0);
 * @stack: double pointer to the beginning of the stack
 * @line_number: script line number
 */
-void push(stack_t **stack, unsigned int line_number)
-{
-char *arg;
+void push(stack_t **stack, unsigned int line_number, char *arg)
+{ 
 int num;
 
 arg = strtok(NULL, "\n\t\r ");
-if (arg == NULL || check_for_digit(arg))
-{
+if (arg == NULL || check_for_digit(arg)) {
 dprintf(STDERR_FILENO, "L%u: usage: push integer\n", line_number);
 exit(EXIT_FAILURE);
 }
