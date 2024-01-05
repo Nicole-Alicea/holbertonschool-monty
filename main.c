@@ -5,6 +5,7 @@
  * @argv: double pointer to argument vector
  * Return: 0 Success
  */
+var_t var;
 int main(int argc, char **argv)
 {
 	char *line = NULL;

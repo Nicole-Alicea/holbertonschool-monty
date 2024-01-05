@@ -6,6 +6,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
+
+
+typedef struct var_s {
+  int queue; 
+  size_t stack_len; 
+} var_t;
+
+#define STACK 0
+#define QUEUE 1
+
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
