@@ -11,8 +11,7 @@
  * Return: void
  */
 
-int exe(char *line, char *arg, stack_t **stack, unsigned int line_number,
-		FILE *file)
+int exe(char *line, char *arg, stack_t **stack, unsigned int line_number, FILE *file)
 {
 	if (strcmp(line, "push") == 0)
 	{
