@@ -8,18 +8,21 @@
  * Return: void
  */
 
-void pop(stack_t **stack, FILE *file, char *line, unsigned int line_number)
+void pop(stack_t **stack, unsigned int line_number)
 {
-	stack_t *head = *stack;
+	stack_t *pop = *stack;
 
-	if (*stack == NULL)
+	if (var.stack_len == 0)
 	{
-		fprintf(stderr, "L%d: can't pop empty stack\n", line_number);
-		fclose(file);
-		free(line);
-		free_the_stack(*stack);
+		fprintf(stderr, "L%u: can't pop an empty stack\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-	*stack = head->next;
-	free(head);
+	(*stack)->next->prev = (*stack)->prev;
+	(*stack)->prev->next = (*stack)->next;
+	if (var.stack_len != 1)
+		*stack = (*stack)->next;
+	else
+		*stack = NULL;
+	free(pop);
+	var.stack_len--;
 }

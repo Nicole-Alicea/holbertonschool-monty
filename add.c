@@ -10,16 +10,15 @@
 
 void add(stack_t **stack, unsigned int line_number)
 {
-	stack_t *temp;
+	int n = 0;
 
-	if (*stack == NULL || (*stack)->next == NULL)
+	if (var.stack_len < 2)
 	{
-		fprintf(stderr, "L%u: can't add, stack too short\n", line_number);
+		fprintf(stderr, "L%u: can't add, stack too short\n",
+				line_number);
 		exit(EXIT_FAILURE);
 	}
-	temp = *stack;
-	temp->next->n += temp->n;
-	*stack = temp->next;
-	(*stack)->prev = NULL;
-	free(temp);
+	n += (*stack)->n;
+	pop(stack, line_number);
+	(*stack)->n += n;
 }

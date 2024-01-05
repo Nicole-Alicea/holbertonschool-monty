@@ -7,15 +7,22 @@
 #include <string.h>
 #include <unistd.h>
 
-
-
-typedef struct var_s {
-  int queue; 
-  size_t stack_len; 
+/**
+ * struct var_s - Struct to contain the main variables of the Monty interpreter
+ * @queue: Flag to determine if it is in stack or queue mode
+ * @stack_len: The length of the stack
+ */
+typedef struct var_s
+{
+	int queue;
+	size_t stack_len; 
 } var_t;
 
 #define STACK 0
 #define QUEUE 1
+
+/* global struct to hold flag for queue and stack length */
+extern var_t var;
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -47,18 +54,15 @@ typedef struct instruction_s
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-void push(stack_t **stack, unsigned int line_number, char *arg);
+void push(stack_t **stack, unsigned int line_number);
 
 void pall(stack_t **stack, unsigned int line_number);
 
-int exe(char *line, char *arg, stack_t **stack, unsigned int line_number,
-		FILE *file);
-
-int is_integer(const char *arg);
+void execute(char *op, stack_t **stack, unsigned int line_number);
 
 void pint(stack_t **stack, unsigned int line_number);
 
-void pop(stack_t **stack, FILE *file, char *line, unsigned int line_number);
+void pop(stack_t **stack, unsigned int line_number);
 
 void nop(stack_t **stack, unsigned int line_number);
 
@@ -66,6 +70,9 @@ void swap(stack_t **stack, unsigned int line_number);
 
 void add(stack_t **stack, unsigned int line_number);
 
-void free_the_stack(stack_t *stack);
+stack_t *add_node(stack_t **stack, const int n);
 
+void free_the_stack(int status, void *arg);
+
+void free_line(int status, void *arg);
 #endif
