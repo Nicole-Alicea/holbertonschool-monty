@@ -1,35 +1,47 @@
 #include "monty.h"
+#include <ctype.h>
 
 /**
-* push - Creates a new node with the provided integer value and pushes
-* it onto the top of the given stack.
-* @stack: Double pointer to the top of the stack.
-* @line_number: File's line number.
-* @arg: String argument representing an integer to be pushed onto the stack.
-*
-* Return: void
+* check_for_digit - checks that a string only contains digits
+* @arg: string to check
+* Return: 0 if only digits, else 1
 */
-void push(stack_t **stack, unsigned int line_number, char *arg)
+static int check_for_digit(char *arg)
 {
+int i;
+
+for (i = 0; arg[i]; i++)
+{
+if (arg[i] == '-' && i == 0)
+continue;
+if (!isdigit(arg[i]))
+return (1);
+}
+return (0);
+}
+
+/**
+* push - push an integer onto the stack
+* @stack: double pointer to the beginning of the stack
+* @line_number: script line number
+*/
+void push(stack_t **stack, unsigned int line_number)
+{
+char *arg;
 int num;
 
-if (arg == NULL)
+arg = strtok(NULL, "\n\t\r ");
+if (arg == NULL || check_for_digit(arg))
 {
-fprintf(stderr, "L%d: usage: push integer\n", line_number);
+dprintf(STDERR_FILENO, "L%u: usage: push integer\n", line_number);
 exit(EXIT_FAILURE);
 }
-
 num = atoi(arg);
-if (num == 0 && strcmp(arg, "0") != 0)
-{
-fprintf(stderr, "L%d: usage: push integer\n", line_number);
-exit(EXIT_FAILURE);
-}
 
 stack_t *new_node = (stack_t *) malloc(sizeof(stack_t));
 if (new_node == NULL)
 {
-fprintf(stderr, "Error: malloc failed\n");
+dprintf(STDERR_FILENO, "Error: malloc failed\n");
 exit(EXIT_FAILURE);
 }
 
@@ -40,6 +52,5 @@ if (*stack != NULL)
 {
 (*stack)->prev = new_node;
 }
-
 *stack = new_node;
 }
