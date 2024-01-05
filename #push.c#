@@ -1,0 +1,12 @@
+#include "monty.h"
+
+/**
+ * push - Creates a new node with the provided integer value and pushes
+ * it onto the top of the given stack
+ * @stack: Double pointer to the top of the stack
+ * @line_number: File's line number
+ *
+ * Return: void
+ */
+
+
