@@ -1,5 +1,7 @@
 #include "monty.h"
 
+var_t var;
+
 /**
  * file_close - close file stream
  * @status: status passed to exit
@@ -32,8 +34,6 @@ int main(int argc, char *argv[])
 	FILE *file = NULL;
 	char *line = NULL, *op = NULL;
 	size_t n = 0;
-
-	var_t var;
 
 	var.queue = 0;
 	var.stack_len = 0;
