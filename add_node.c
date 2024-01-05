@@ -1,12 +1,14 @@
 #include "monty.h"
+
 /**
- * add_node - The function will add the node to the begining if in
- * stack mode and the end if in queue mode
- * @stack: double pointer to the beginning 
- * @n: value to add to the new node
+ * add_node - The function will add the node to the beginning if in
+ * stack mode and the end if in queve mode
+ * @stack: double pointer to the beginning
+ * @n: Value to add to the new mode
  *
  * Return: pointer to the new node, or NULL on failure
  */
+
 stack_t *add_node(stack_t **stack, const int n)
 {
 	stack_t *new;

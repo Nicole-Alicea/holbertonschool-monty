@@ -12,11 +12,13 @@
  * @queue: Flag to determine if it is in stack or queue mode
  * @stack_len: The length of the stack
  */
+
 typedef struct var_s
 {
 	int queue;
-	size_t stack_len; 
-} var_t;
+	size_t stack_len;
+}
+var_t;
 
 #define STACK 0
 #define QUEUE 1
@@ -33,12 +35,14 @@ extern var_t var;
  * Description: doubly linked list node structure
  * for stack, queues, LIFO, FIFO
  */
+
 typedef struct stack_s
 {
-        int n;
-        struct stack_s *prev;
-        struct stack_s *next;
-} stack_t;
+	int n;
+	struct stack_s *prev;
+	struct stack_s *next;
+}
+stack_t;
 
 /**
  * struct instruction_s - opcode and its function
@@ -48,11 +52,13 @@ typedef struct stack_s
  * Description: opcode and its function
  * for stack, queues, LIFO, FIFO
  */
+
 typedef struct instruction_s
 {
-        char *opcode;
-        void (*f)(stack_t **stack, unsigned int line_number);
-} instruction_t;
+	char *opcode;
+	void (*f)(stack_t **stack, unsigned int line_number);
+}
+instruction_t;
 
 void push(stack_t **stack, unsigned int line_number);
 
@@ -75,4 +81,5 @@ stack_t *add_node(stack_t **stack, const int n);
 void free_the_stack(int status, void *arg);
 
 void free_line(int status, void *arg);
+
 #endif

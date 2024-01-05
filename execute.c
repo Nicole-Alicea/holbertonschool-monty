@@ -1,12 +1,14 @@
 #include "monty.h"
+
 /**
- * exe - Executes different operations based on the 'opcode'
+ * execute - Executes different operations based on the 'opcode'
  * @op: opcode to be checked
  * @stack: Double pointer to the head of the stack
  * @line_number: the line number
- * 
+ *
  * Return: void
  */
+
 void execute(char *op, stack_t **stack, unsigned int line_number)
 {
 	size_t i;
